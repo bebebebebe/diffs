@@ -23,16 +23,28 @@ def diff(original, modified) #array --> string
   array.join
 end
 
-def diffs(a,b)
-  keys = match(a,b).keys
-  if keys.empty?
-    array = a.map { |x| red(x) } + b.map { |x| green(x) }
-    return array.join
-  else
-    
-
-    
+#match: lcs (ordered by index in original)
+def diffs(a,b, match)
+  if match.empty?
+    a.map { |x| red(x) } + b.map { |x| green(x) }
+  elsif match.first[1] == 0 && match.first[2] == 0
+    remaining_match = match.drop(1).map do |triple|
+      [triple[0], triple[1] - 1, triple[2] - 1]
+    end
+    puts remaining_match.inspect
+    [a[0]] + diffs(a.drop(1), b.drop(1), remaining_match)
+  elsif match.first[1] == 0
+    [red(b[0])] + diffs(a, b.drop(1), match.map{ |t| [t[0], t[1], t[2] - 1] })
+  else match.first[2] == 0
+    [a[0]] + diffs(a.drop(1), b, match.map{ |t| [t[0], t[1] - 1, t[2]] })
   end
+end
+
+
+
+
+def match(a,b)
+  lcs(a,b).sort { |x,y| x[1] <=> y[1] }
 end
 
 
@@ -60,5 +72,22 @@ def match(original, modified)
   hash
 end
 
+# sort triple by second elemnent
+def sort_by_middle(triples)
+  triples.sort { |x,y| x[1] <=> y[1] }
+end
 
-puts diffs(%w(a n d), %w(t h e))
+
+
+a = %w(c a t)
+b = %w(c t p)
+puts diffs(a, b, lcs(a,b)).join
+
+
+
+
+
+
+
+
+
