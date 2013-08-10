@@ -59,7 +59,3 @@ class TestSubseq < MiniTest::Unit::TestCase
   end
 
  end
-
-
-
-
