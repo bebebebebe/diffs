@@ -69,28 +69,23 @@ class CommandLineDiff
   attr_accessor :original, :revised
 
   def char_based
-    get_original
-    get_revised
+    get_inputs
     process_for_char_comparison
     compare_inputs
     output_char_diff
   end
 
   def word_based
-    get_original
-    get_revised
+    get_inputs
     process_for_word_comparison
     compare_inputs
     output_word_diff
   end
 
-  def get_original
+  def get_inputs
     puts 'Enter your first text:'
     print '> '
     @original = gets.chomp 
-  end
-
-  def get_revised
     puts 'Enter your revised text:'
     print '> '
     @revised = gets.chomp
@@ -120,4 +115,3 @@ class CommandLineDiff
   end
 
 end
-
