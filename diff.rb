@@ -12,7 +12,7 @@ class Versions
     return [] if original.empty? || revised.empty?
     if original.first == revised.first
       [[original.first, i, j]] + 
-          Versions.new(original.drop(1), revised.drop(1)).lcs(i+1, j+1, memo)
+        Versions.new(original.drop(1), revised.drop(1)).lcs(i+1, j+1, memo)
     else
       seq1 = memo[[original.drop(1), revised, i+1, j]] = 
         Versions.new(original.drop(1), revised).lcs(i+1, j, memo)
@@ -42,6 +42,36 @@ class Versions
   end
 
 end
+
+# #####
+# def unjumble(word)
+#   if !(word.include?('deleted') && word.include?('added'))
+#     puts 'first clause'
+#   end  
+#   orig = []
+#   rev = []
+#   word.each do |char|
+#     puts char; puts char.inspect
+#     if char.inspect.contains?('deleted')
+#       puts 'found a deleted'
+#       orig << char
+
+#     elsif char.contains?('added')
+#       rev << char
+#     else
+#       orig << Display.deleted(char)
+#       rev << Display.deleted(char)
+#     end
+#   end
+  
+#   puts 'orig: ' + orig
+#   puts 'rev: ' + rev
+#   orig + rev
+# end
+
+
+
+
 
 module Display
   def self.deleted(x)
@@ -99,23 +129,4 @@ class GiveDiff
   end
 
 end
-
-
-
-# orig = 'hi, how are you today?'.split('')
-# rev = 'hello, how are you?'.split('')
-
-
-# v = Versions.new(orig, rev)
-
-# puts v.diff(v.lcs).join
-
-
-
-
-
-
-
-
-
 
