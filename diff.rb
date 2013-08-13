@@ -95,37 +95,58 @@ module Display
   end
 end
 
-class GiveDiff
+class Diff
   attr_accessor :original, :revised
 
-  def compare
+  def char_diff
     get_original
     get_revised
-    process
-    output_diff
+    process_for_char_comparison
+    compare_inputs
+    output_char_diff
+  end
+
+  def word_diff
+    get_original
+    get_revised
+    process_for_word_comparison
+    compare_inputs
+    output_word_diff
   end
 
   def get_original
     puts 'Enter your first text:'
     print '> '
-    first = gets.chomp
-    @original = first.split('')
+    @original = gets.chomp 
   end
 
   def get_revised
     puts 'Enter your revised text:'
     print '> '
-    second = gets.chomp
-    @revised = second.split('')
+    @revised = gets.chomp
   end
 
-  def process
+  def process_for_char_comparison
+    @original = @original.split('')
+    @revised = @revised.split('')
+  end
+
+  def process_for_word_comparison
+    @original = @original.split(' ')
+    @revised = @revised.split(' ')
+  end
+
+  def compare_inputs
     v = Versions.new(@original, @revised)
     v.diff(v.lcs)
   end
 
-  def output_diff
-    puts process.join
+  def output_char_diff
+    puts compare_inputs.join
+  end
+
+  def output_word_diff
+    puts compare_inputs.join(' ')
   end
 
 end
