@@ -43,36 +43,6 @@ class Versions
 
 end
 
-# #####
-# def unjumble(word)
-#   if !(word.include?('deleted') && word.include?('added'))
-#     puts 'first clause'
-#   end  
-#   orig = []
-#   rev = []
-#   word.each do |char|
-#     puts char; puts char.inspect
-#     if char.inspect.contains?('deleted')
-#       puts 'found a deleted'
-#       orig << char
-
-#     elsif char.contains?('added')
-#       rev << char
-#     else
-#       orig << Display.deleted(char)
-#       rev << Display.deleted(char)
-#     end
-#   end
-  
-#   puts 'orig: ' + orig
-#   puts 'rev: ' + rev
-#   orig + rev
-# end
-
-
-
-
-
 module Display
   def self.deleted(x)
     red(x)
@@ -95,10 +65,10 @@ module Display
   end
 end
 
-class Diff
+class CommandLineDiff
   attr_accessor :original, :revised
 
-  def char_diff
+  def char_based
     get_original
     get_revised
     process_for_char_comparison
@@ -106,7 +76,7 @@ class Diff
     output_char_diff
   end
 
-  def word_diff
+  def word_based
     get_original
     get_revised
     process_for_word_comparison
@@ -132,8 +102,8 @@ class Diff
   end
 
   def process_for_word_comparison
-    @original = @original.split(' ')
-    @revised = @revised.split(' ')
+    @original = @original.split
+    @revised = @revised.split
   end
 
   def compare_inputs
