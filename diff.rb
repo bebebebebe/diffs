@@ -66,8 +66,7 @@ module Display
 end
 
 class CommandLineDiff
-  attr_accessor :original, :revised
-
+  
   def char_based
     get_inputs
     process_for_char_comparison
