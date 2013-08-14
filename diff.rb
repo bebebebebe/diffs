@@ -11,7 +11,7 @@ class Versions
     return memo[[original, revised, i, j]] if memo.has_key?([original, revised, i, j])
     return [] if original.empty? || revised.empty?
     if original.first == revised.first
-      [[original.first, i, j]] + 
+      [[i, j]] + 
         Versions.new(original.drop(1), revised.drop(1)).lcs(i+1, j+1, memo)
     else
       seq1 = memo[[original.drop(1), revised, i+1, j]] = 
@@ -29,14 +29,14 @@ class Versions
   def diff(match)
     if match.empty?
       original.map { |x| Display.deleted(x) } + revised.map { |x| Display.added(x) }
-    elsif match.first[1] == 0 && match.first[2] == 0
-      remaining_match = match.drop(1).map { |t| [t[0], t[1]-1, t[2]-1] }
+    elsif match.first[0] == 0 && match.first[1] == 0
+      remaining_match = match.drop(1).map { |t| [t[0]-1, t[1]-1] }
       [original[0]] + Versions.new(original.drop(1), revised.drop(1)).diff(remaining_match)
-    elsif match.first[1] == 0
-      remaining_match = match.map { |t| [t[0], t[1], t[2]-1] }
+    elsif match.first[0] == 0
+      remaining_match = match.map { |t| [t[0], t[1]-1] }
       [Display.added(revised[0])] + Versions.new(original, revised.drop(1)).diff(remaining_match)
-    else match.first[2] == 0
-      remaining_match = match.map { |t| [t[0], t[1]-1, t[2]]}
+    else match.first[1] == 0
+      remaining_match = match.map { |t| [t[0]-1, t[1]]}
       [Display.deleted(original[0])] + Versions.new(original.drop(1), revised).diff(remaining_match)
     end
   end

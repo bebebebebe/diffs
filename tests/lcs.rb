@@ -21,14 +21,14 @@ class TestLcs < MiniTest::Unit::TestCase
     original = [1,2]
     revised = [5,1,3,2,5]
     v = Versions.new(original, revised)
-    assert_equal(v.lcs, ([[1,0,1], [2,1,3]]))
+    assert_equal(v.lcs, ([[0,1], [1,3]]))
   end
 
   def test_a_overlap_b
     original = [1,2,5]
     revised = [5,1,3,2,5]
     v = Versions.new(original, revised)
-    assert_equal(v.lcs, ([[1,0,1], [2,1,3] ,[5,2,4]]))
+    assert_equal(v.lcs, ([[0,1], [1,3] ,[2,4]]))
   end
 
 end

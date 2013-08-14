@@ -8,7 +8,7 @@ class TestDiff < MiniTest::Unit::TestCase
     original = [1,2]
     revised = [1,2]
     v = Versions.new(original, revised)
-    match = [[1,0,0], [2,1,1]]
+    match = [[0,0], [1,1]]
     assert_equal(v.diff(match), [1,2])
   end
 
@@ -16,7 +16,7 @@ class TestDiff < MiniTest::Unit::TestCase
     original = [1,2]
     revised = [1, 3, 2, 4]
     v = Versions.new(original, revised)
-    match = [[1,0,0], [2,1,2]]
+    match = [[0,0], [1,2]]
     assert_equal(v.diff(match), [1, Display.added(3), 2, Display.added(4)])
   end
 
@@ -24,7 +24,7 @@ class TestDiff < MiniTest::Unit::TestCase
     original = [1, 3, 2, 4]
     revised = [1,2]
     v = Versions.new(original, revised)
-    match = [[1,0,0], [2,2,1]]
+    match = [[0,0], [2,1]]
     assert_equal(v.diff(match), [1, Display.deleted(3), 2, Display.deleted(4)])
   end
 
@@ -32,7 +32,7 @@ class TestDiff < MiniTest::Unit::TestCase
     original = [1, 3, 2]
     revised = [1, 2, 4]
     v = Versions.new(original, revised)
-    match = [[1,0,0], [2,2,1]]
+    match = [[0,0], [2,1]]
     assert_equal(v.diff(match), [1, Display.deleted(3), 2, Display.added(4)])
   end
 
