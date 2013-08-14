@@ -38,8 +38,8 @@ class Versions
   #   Returns an array that contains and preserves the order of
   #   all and only the elements of original and of revised.
   #   Elements in original whose index isn't in the first position of an array in
-  #   match are displayed as deleted; elements in revised whose index ins't in 
-  #   the second position of array in match are displayed as revised.
+  #   match are displayed as deleted; elements in revised whose index isn't in 
+  #   the second position of array in match are displayed as added.
   #
   def diff(match)
     if match.empty?
