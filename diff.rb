@@ -1,18 +1,19 @@
-
 class Versions
   attr_accessor :original, :revised
+  # original, revised are arrays.
 
   def initialize(original, revised)
     @original = original
     @revised = revised
   end
 
-  #   Pre: original, revised are arrays.
-  #   Returns an array representing the longest common subsequence (lcs) of 
-  #   revised and original.
-  #   Each element of the returned array is an array of two integers: 
-  #     [index of lcs element in original, index of lcs element in revised].
-  # 
+  #   A common subsequence is an array of pairs [i,j] such that 
+  #   original[i] == revised[j], with later pairs having greater 
+  #   indices (i.e. they're in increasing order).
+
+  #   Given indices into original and revised, return a longest common
+  #   subsequence of their respective suffixes from those indices.
+  #
   def lcs(i=0, j=0, memo={})
     return memo[[original, revised, i, j]] if memo.has_key?([original, revised, i, j])
     return [] if original.empty? || revised.empty?
@@ -32,11 +33,8 @@ class Versions
     end
   end
 
-  #   Pre: original, revised are arrays;
-  #     match is an array containing two element arrays [i, j] such that
-  #     original[i] is the same as revised[j].
-  #   Returns an array that contains and preserves the order of
-  #   all and only the elements of original and of revised.
+  #   Given a common subsequence, return an array showing the implied edits
+  #   in going from original to revised.
   #   Elements in original whose index isn't in the first position of an array in
   #   match are displayed as deleted; elements in revised whose index isn't in 
   #   the second position of array in match are displayed as added.
