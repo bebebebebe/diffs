@@ -1,17 +1,20 @@
 
 class Versions
   attr_accessor :original, :revised
+  #   original, revised are arrays.
 
   def initialize(original, revised)
     @original = original
     @revised = revised
   end
 
-  #   Pre: original, revised are arrays.
-  #   Returns an array representing the longest common subsequence (lcs) of 
-  #   revised and original.
-  #   Each element of the returned array is an array of two integers: 
-  #     [index of lcs element in original, index of lcs element in revised].
+  
+  #   A common subsequence is an array of pairs [i, j] such that 
+  #   original[i] == revised[j], with later pairs having greater
+  #   indices (i.e., they are in increasing order).
+  #
+  #   Given indices i of original and j of revised, return a longest common
+  #   subsequence of original from index i and revised from index j.
   # 
   def lcs(i=0, j=0, memo={})
     return memo[[original, revised, i, j]] if memo.has_key?([original, revised, i, j])
@@ -32,27 +35,22 @@ class Versions
     end
   end
 
-  #   Pre: original, revised are arrays;
-  #     match is an array containing two element arrays [i, j] such that
-  #     original[i] is the same as revised[j].
-  #   Returns an array that contains and preserves the order of
-  #   all and only the elements of original and of revised.
-  #   Elements in original whose index isn't in the first position of an array in
-  #   match are displayed as deleted; elements in revised whose index isn't in 
-  #   the second position of array in match are displayed as added.
+ 
+  #   Given a common subsequence, return an array showing the implied edits
+  #   in going from original to revised.
   #
-  def diff(match)
-    if match.empty?
+  def diff(matches)
+    if matches.empty?
       original.map { |x| Display.deleted(x) } + revised.map { |x| Display.added(x) }
-    elsif match.first[0] == 0 && match.first[1] == 0
-      remaining_match = match.drop(1).map { |t| [t[0]-1, t[1]-1] }
-      [original[0]] + Versions.new(original.drop(1), revised.drop(1)).diff(remaining_match)
-    elsif match.first[0] == 0
-      remaining_match = match.map { |t| [t[0], t[1]-1] }
-      [Display.added(revised[0])] + Versions.new(original, revised.drop(1)).diff(remaining_match)
-    else match.first[1] == 0
-      remaining_match = match.map { |t| [t[0]-1, t[1]]}
-      [Display.deleted(original[0])] + Versions.new(original.drop(1), revised).diff(remaining_match)
+    elsif matches.first[0] == 0 && matches.first[1] == 0
+      remaining_matches = matches.drop(1).map { |t| [t[0]-1, t[1]-1] }
+      [original[0]] + Versions.new(original.drop(1), revised.drop(1)).diff(remaining_matches)
+    elsif matches.first[0] == 0
+      remaining_matches = matches.map { |t| [t[0], t[1]-1] }
+      [Display.added(revised[0])] + Versions.new(original, revised.drop(1)).diff(remaining_matches)
+    else matches.first[1] == 0
+      remaining_matches = matches.map { |t| [t[0]-1, t[1]]}
+      [Display.deleted(original[0])] + Versions.new(original.drop(1), revised).diff(remaining_matches)
     end
   end
 
