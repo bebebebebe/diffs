@@ -16,17 +16,17 @@ class Versions
   #   Given indices i of original and j of revised, return a longest common
   #   subsequence of original from index i and revised from index j.
   # 
-  def lcs(i=0, j=0, memo={})
+  def longest_common_subseq(i=0, j=0, memo={})
     return memo[[original, revised, i, j]] if memo.has_key?([original, revised, i, j])
     return [] if original.empty? || revised.empty?
     if original.first == revised.first
       [[i, j]] + 
-        Versions.new(original.drop(1), revised.drop(1)).lcs(i+1, j+1, memo)
+        Versions.new(original.drop(1), revised.drop(1)).longest_common_subseq(i+1, j+1, memo)
     else
       seq1 = memo[[original.drop(1), revised, i+1, j]] = 
-        Versions.new(original.drop(1), revised).lcs(i+1, j, memo)
+        Versions.new(original.drop(1), revised).longest_common_subseq(i+1, j, memo)
       seq2 = memo[[original, revised.drop(1), i, j+1]] =
-        Versions.new(original, revised.drop(1)).lcs(i, j+1, memo)
+        Versions.new(original, revised.drop(1)).longest_common_subseq(i, j+1, memo)
       if seq1.count >= seq2.count
         seq1
       else
@@ -115,7 +115,7 @@ class CommandLineDiff
 
   def compare_inputs
     v = Versions.new(@original, @revised)
-    v.diff(v.lcs)
+    v.diff(v.longest_common_subseq)
   end
 
   def output_char_diff
