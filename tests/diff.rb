@@ -37,4 +37,3 @@ class TestDiff < MiniTest::Unit::TestCase
   end
 
 end
-
