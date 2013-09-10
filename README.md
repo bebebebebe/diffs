@@ -9,4 +9,6 @@ How is the diff determined? For sequences s and t, s is a subequence of t if eve
 
 And how do you find the longest common subsequence of two sequences? By recursion on the length of the sequences.
 
-The Ruby logest common subequences method is memoized.
+There are two versions in Ruby:
+* a memoized recursive solution in diff.rb, and
+* an iterative solution in lcs_iter.rb
