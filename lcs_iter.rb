@@ -11,10 +11,11 @@ class Versions
 
   # use table below to construct the longest common subsequence of
   # prefixes of v1 up to index x and v2 up to index y, respectively
+  # Returns lcs of same type as v1
   def longest_common_subsequence(x=v1.length - 1, y=v2.length - 1)
-    return '' if table[[x,y]] == 0
+    return v1.class.new if table[[x,y]] == 0
     if v1[x] == v2[y]
-      longest_common_subsequence(x-1, y-1) + v1[x]
+      longest_common_subsequence(x-1, y-1) << v1[x]
     elsif table[[x-1, y]] >= table[[x, y-1]]
       longest_common_subsequence(x-1, y)
     else
@@ -22,7 +23,7 @@ class Versions
     end
   end
 
-  # Returns a hash with key [x,y] having the value
+  # Returns a hash with key [x,y] having the value:
   # length of the longest common subsequence of
   # the prefix of v1 up to index x, and the prefix of v2 up to the index y.
   def table
