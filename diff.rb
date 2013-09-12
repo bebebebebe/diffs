@@ -107,7 +107,7 @@ class CommandLineDiff
     puts 'Enter your first text:'
     print '> '
     @v1 = gets.chomp 
-    puts 'Enter your v2 text:'
+    puts 'Enter your revised text:'
     print '> '
     @v2 = gets.chomp
   end
