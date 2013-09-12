@@ -1,56 +1,65 @@
-
 class Versions
-  attr_accessor :original, :revised
-  #   original, revised are arrays.
+  attr_accessor :v1, :v2
 
-  def initialize(original, revised)
-    @original = original
-    @revised = revised
+  # v1 and v2 are two versions to be compared.
+  # They can be strings or arrays.
+
+  def initialize(v1, v2)
+    @v1 = v1
+    @v2 = v2
   end
 
-  
-  #   A common subsequence is an array of pairs [i, j] such that 
-  #   original[i] == revised[j], with later pairs having greater
-  #   indices (i.e., they are in increasing order).
+  # Uses table below to construct the longest common subsequence of
+  # prefixes of v1 up to index x and v2 up to index y, respectively.
+  # Returns array with elements [x,y] with v1[x] == v2[y] making up the lcs.
   #
-  #   Given indices i of original and j of revised, return a longest common
-  #   subsequence of original from index i and revised from index j.
-  # 
-  def longest_common_subseq(i=0, j=0, memo={})
-    return memo[[original, revised, i, j]] if memo.has_key?([original, revised, i, j])
-    return [] if original.empty? || revised.empty?
-    if original.first == revised.first
-      [[i, j]] + 
-        Versions.new(original.drop(1), revised.drop(1)).longest_common_subseq(i+1, j+1, memo)
+  def longest_common_subseq(x=v1.length - 1, y=v2.length - 1)
+    return [] if table[[x,y]] == 0
+    if v1[x] == v2[y]
+      longest_common_subseq(x-1, y-1) << [x,y]
+    elsif table[[x-1, y]] >= table[[x, y-1]]
+      longest_common_subseq(x-1, y)
     else
-      seq1 = memo[[original.drop(1), revised, i+1, j]] = 
-        Versions.new(original.drop(1), revised).longest_common_subseq(i+1, j, memo)
-      seq2 = memo[[original, revised.drop(1), i, j+1]] =
-        Versions.new(original, revised.drop(1)).longest_common_subseq(i, j+1, memo)
-      if seq1.count >= seq2.count
-        seq1
-      else
-        seq2
-      end
+      longest_common_subseq(x, y-1)
     end
   end
 
+  # Returns a hash with each key [x,y] having the value:
+  # length of the longest common subsequence of
+  # the prefix of v1 up to index x, and the prefix of v2 up to the index y.
+  #
+  def table
+    table = {}
+    (-1...v1.length).each { |x| table[[x, -1]] = 0 }
+    (0...v2.length).each { |y| table[[-1, y]] = 0 }
+
+    (0...v1.length).each do |x|
+      (0...v2.length).each do |y|
+        if v1[x] == v2[y]
+          table[[x,y]] = table[[x-1, y-1]] + 1
+        else
+          table[[x,y]] = [table[[x-1,y]], table[[x,y-1]]].max
+        end
+      end
+    end
+    table
+  end
  
   #   Given a common subsequence, return an array showing the implied edits
-  #   in going from original to revised.
+  #   in going from v1 to v2.
   #
   def diff(matches)
     if matches.empty?
-      original.map { |x| Display.deleted(x) } + revised.map { |x| Display.added(x) }
+      v1.map { |x| Display.deleted(x) } + v2.map { |x| Display.added(x) }
     elsif matches.first[0] == 0 && matches.first[1] == 0
       remaining_matches = matches.drop(1).map { |t| [t[0]-1, t[1]-1] }
-      [original[0]] + Versions.new(original.drop(1), revised.drop(1)).diff(remaining_matches)
+      [v1[0]] + Versions.new(v1.drop(1), v2.drop(1)).diff(remaining_matches)
     elsif matches.first[0] == 0
       remaining_matches = matches.map { |t| [t[0], t[1]-1] }
-      [Display.added(revised[0])] + Versions.new(original, revised.drop(1)).diff(remaining_matches)
+      [Display.added(v2[0])] + Versions.new(v1, v2.drop(1)).diff(remaining_matches)
     else matches.first[1] == 0
-      remaining_matches = matches.map { |t| [t[0]-1, t[1]]}
-      [Display.deleted(original[0])] + Versions.new(original.drop(1), revised).diff(remaining_matches)
+      remaining_matches = matches.map { |t| [t[0]-1, t[1]] }
+      [Display.deleted(v1[0])] + Versions.new(v1.drop(1), v2).diff(remaining_matches)
     end
   end
 
@@ -97,24 +106,24 @@ class CommandLineDiff
   def get_inputs
     puts 'Enter your first text:'
     print '> '
-    @original = gets.chomp 
-    puts 'Enter your revised text:'
+    @v1 = gets.chomp 
+    puts 'Enter your v2 text:'
     print '> '
-    @revised = gets.chomp
+    @v2 = gets.chomp
   end
 
   def process_for_char_comparison
-    @original = @original.split('')
-    @revised = @revised.split('')
+    @v1 = @v1.split('')
+    @v2 = @v2.split('')
   end
 
   def process_for_word_comparison
-    @original = @original.split
-    @revised = @revised.split
+    @v1 = @v1.split
+    @v2 = @v2.split
   end
 
   def compare_inputs
-    v = Versions.new(@original, @revised)
+    v = Versions.new(@v1, @v2)
     v.diff(v.longest_common_subseq)
   end
 
