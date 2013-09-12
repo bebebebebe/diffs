@@ -1,7 +1,6 @@
 require 'minitest/autorun'
 require_relative '../diff'
 
-
 class TestLongestCommonSubseq < MiniTest::Unit::TestCase
   def test_a_empty
     original = []
