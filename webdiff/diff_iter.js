@@ -23,24 +23,25 @@ function Versions(v1, v2){
       return array;
     } else if (this.table(x-1, y) >= this.table(x, y-1)) {
       var array = this.diff(x-1, y);
-      array.push(deleted(v1[x]));
+      array.push(Display.deleted(v1[x]));
       return array;
     } else {
       var array = this.diff(x, y-1);
-      array.push(added(v2[y]));
+      array.push(Display.added(v2[y]));
       return array;
     }
   };
 
-  
-  deleted = function(text){
-    return '<span class="del"><strike>' + text + '</strike></span>';
-    };
-  added = function(text){
-    return '<span class="add">' + text + '</span>';
-  };
-
 };
+
+var Display = function(){
+  return {deleted: function(text){
+    return '<span class="del"><strike>' + text + '</strike></span>';
+  },
+  added: function(text){
+    return '<span class="add">' + text + '</span>';
+  }};
+}();
 
 function WebDiff(original, revised){
   this.original = original; // original, revised are strings
@@ -53,5 +54,4 @@ function WebDiff(original, revised){
     var output = v.diff();
     return output.join(' ');
   }
-  
 }
