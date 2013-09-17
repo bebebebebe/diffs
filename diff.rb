@@ -44,7 +44,21 @@ class Versions
     end
     table
   end
- 
+
+  # use table to construct diff (don't use lcs).
+  # Return an array showing the implied edits in going from v1 to v2.
+  #
+  def differ(x=v1.length - 1, y=v2.length - 1)
+    return [] if x < 0 || y < 0
+    if v1[x] == v2[y]
+      differ(x-1, y-1) << v1[x]
+    elsif table[[x-1, y]] >= table[[x, y-1]]
+      differ(x-1, y) << Display.deleted(v1[x])
+    else
+      differ(x, y-1) << Display.added(v2[y])
+    end
+  end
+
   #   Given a common subsequence, return an array showing the implied edits
   #   in going from v1 to v2.
   #
@@ -136,3 +150,6 @@ class CommandLineDiff
   end
 
 end
+
+v = Versions.new(['a', 'b', 'c'], ['a', 'c', 'd'])
+puts v.differ
