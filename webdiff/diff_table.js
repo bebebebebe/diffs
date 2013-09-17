@@ -2,6 +2,10 @@ function Versions(v1, v2){
   this.v1 = v1;
   this.v2 = v2;
 
+
+  // table(x,y) is the length of the longest common subsequence of
+  // the prefix of v1 up to index x and the prefix of v2 up to the index y.
+  // 
   this.table = function(x,y) {
     if (x == -1 || y == -1) {
       return 0;
@@ -12,6 +16,9 @@ function Versions(v1, v2){
     }
   };
 
+  // Use table above to construct the implied edits in going from
+  // the prefix of v1 up to index x, to the previx of v2 up to index y.
+  // 
   this.diff = function(x,y) {
     x = typeof x !== 'undefined' ? x : v1.length - 1;
     y = typeof y !== 'undefined' ? y : v2.length -1;
