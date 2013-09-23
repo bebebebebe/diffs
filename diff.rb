@@ -30,7 +30,11 @@ class Versions
     table
   end
 
-  # use table to construct diff (don't use lcs).
+  def lcs
+    @lcs ||= table
+  end
+
+  # use table to construct diff.
   # Return an array showing the implied edits in going from v1 to v2.
   #
   def diff(x=v1.length - 1, y=v2.length - 1)
@@ -39,7 +43,7 @@ class Versions
     return diff(x, y-1) << Display.added(v2[y]) if x < 0
     if v1[x] == v2[y]
       diff(x-1, y-1) << v1[x]
-    elsif table[[x-1, y]] >= table[[x, y-1]]
+    elsif lcs[[x-1, y]] >= lcs[[x, y-1]]
       diff(x-1, y) << Display.deleted(v1[x])
     else
       diff(x, y-1) << Display.added(v2[y])  
@@ -130,6 +134,6 @@ Here's a continuation of the sample longer text. It does indeed seem quite slow.
 v1 = text1.split
 v2 = text2.split
 v = Versions.new(v1, v2)
-v.diff
+puts v.diff.join(' ')
 # output = v.diff
 # puts output.join(' ')
