@@ -8,23 +8,8 @@ class Versions
     @v1 = v1
     @v2 = v2
   end
-
-  # Uses table below to construct the longest common subsequence of
-  # prefixes of v1 up to index x and v2 up to index y, respectively.
-  # Returns array with elements [x,y] with v1[x] == v2[y] making up the lcs.
-  #
-  def longest_common_subseq(x=v1.length - 1, y=v2.length - 1)
-    return [] if table[[x,y]] == 0
-    if v1[x] == v2[y]
-      longest_common_subseq(x-1, y-1) << [x,y]
-    elsif table[[x-1, y]] >= table[[x, y-1]]
-      longest_common_subseq(x-1, y)
-    else
-      longest_common_subseq(x, y-1)
-    end
-  end
-
-  # Returns a hash with each key [x,y] having the value:
+  
+  # Returns a hash with each key [x,y] having the following value:
   # length of the longest common subsequence of
   # the prefix of v1 up to index x, and the prefix of v2 up to the index y.
   #
@@ -48,34 +33,19 @@ class Versions
   # use table to construct diff (don't use lcs).
   # Return an array showing the implied edits in going from v1 to v2.
   #
-  def differ(x=v1.length - 1, y=v2.length - 1)
-    return [] if x < 0 || y < 0
+  def diff(x=v1.length - 1, y=v2.length - 1)
+    return [] if x < 0 && y < 0
+    return diff(x-1, y) << Display.deleted(v1[x]) if y < 0
+    return diff(x, y-1) << Display.added(v2[y]) if x < 0
     if v1[x] == v2[y]
-      differ(x-1, y-1) << v1[x]
+      diff(x-1, y-1) << v1[x]
     elsif table[[x-1, y]] >= table[[x, y-1]]
-      differ(x-1, y) << Display.deleted(v1[x])
+      diff(x-1, y) << Display.deleted(v1[x])
     else
-      differ(x, y-1) << Display.added(v2[y])
+      diff(x, y-1) << Display.added(v2[y])  
     end
   end
 
-  #   Given a common subsequence, return an array showing the implied edits
-  #   in going from v1 to v2.
-  #
-  def diff(matches)
-    if matches.empty?
-      v1.map { |x| Display.deleted(x) } + v2.map { |x| Display.added(x) }
-    elsif matches.first[0] == 0 && matches.first[1] == 0
-      remaining_matches = matches.drop(1).map { |t| [t[0]-1, t[1]-1] }
-      [v1[0]] + Versions.new(v1.drop(1), v2.drop(1)).diff(remaining_matches)
-    elsif matches.first[0] == 0
-      remaining_matches = matches.map { |t| [t[0], t[1]-1] }
-      [Display.added(v2[0])] + Versions.new(v1, v2.drop(1)).diff(remaining_matches)
-    else matches.first[1] == 0
-      remaining_matches = matches.map { |t| [t[0]-1, t[1]] }
-      [Display.deleted(v1[0])] + Versions.new(v1.drop(1), v2).diff(remaining_matches)
-    end
-  end
 
 end
 
@@ -138,7 +108,7 @@ class CommandLineDiff
 
   def compare_inputs
     v = Versions.new(@v1, @v2)
-    v.diff(v.longest_common_subseq)
+    v.diff
   end
 
   def output_char_diff
@@ -151,5 +121,15 @@ class CommandLineDiff
 
 end
 
-v = Versions.new(['a', 'b', 'c'], ['a', 'c', 'd'])
-puts v.differ
+text1 = "This is a smaple longer text so as to see how long it takes. Is the iterative or the memoized version faster?
+Here's a continuation of the sample longer text. It seems kind of slow."
+text2 = "This is a sample text to see how long it takes. It seems kind of slow. I wonder why. Blah blah.
+Here's a continuation of the sample longer text. It does indeed seem quite slow."
+#text1 = 'hello this is my first text.'
+#text2 = 'hello this is my revised text. It is slightly longer.'
+v1 = text1.split
+v2 = text2.split
+v = Versions.new(v1, v2)
+v.diff
+# output = v.diff
+# puts output.join(' ')
