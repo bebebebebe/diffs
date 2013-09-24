@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative '../diff'
+require_relative '../lcs_memoized'
 
 class TestLongestCommonSubseq < MiniTest::Unit::TestCase
   def test_a_empty
