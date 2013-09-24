@@ -9,9 +9,9 @@ class Versions
     @v2 = v2
   end
   
-  # Returns a hash with each key [x,y] having the following value:
+  # Returns a hash with each key [x,y] (for x,y > 0) having the following value:
   # length of the longest common subsequence of
-  # the prefix of v1 up to index x, and the prefix of v2 up to the index y.
+  # the prefix of v1 up to index x-1, and the prefix of v2 up to the index y-1.
   #
   def table
     table = {}
