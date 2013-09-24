@@ -124,16 +124,3 @@ class CommandLineDiff
   end
 
 end
-
-text1 = "This is a smaple longer text so as to see how long it takes. Is the iterative or the memoized version faster?
-Here's a continuation of the sample longer text. It seems kind of slow."
-text2 = "This is a sample text to see how long it takes. It seems kind of slow. I wonder why. Blah blah.
-Here's a continuation of the sample longer text. It does indeed seem quite slow."
-#text1 = 'hello this is my first text.'
-#text2 = 'hello this is my revised text. It is slightly longer.'
-v1 = text1.split
-v2 = text2.split
-v = Versions.new(v1, v2)
-puts v.diff.join(' ')
-# output = v.diff
-# puts output.join(' ')
