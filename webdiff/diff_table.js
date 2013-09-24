@@ -2,9 +2,9 @@ function Versions(v1, v2){
   this.v1 = v1;
   this.v2 = v2;
 
-  // lcs_table is an array of arrays. lcs_table[x][y] is the length of 
+  // lcs_table is an array of arrays. For x, y > 0, lcs_table[x][y] is the length of 
   // the longest common subsequence of
-  // the prefix of v1 up to index x and the prefix of v2 up to the index y.
+  // the prefix of v1 up to index x-1 and the prefix of v2 up to the index y-1.
   // 
   var lcs_table = [];
   while (lcs_table.length <= v2.length) {
