@@ -1,7 +1,7 @@
 Diffs
 =====
 
-Ruby command line tool; JavaScript version for web, demo at bebebebebe.herokuapp.com/diffs.
+Ruby command line tool; JavaScript version for web, demo at <a href="https://bebebebebe.herokuapp.com/diffs">bebebebebe.herokuapp.com/diffs</a>.
 
 The Ruby command line tool asks the user for two input ("original" and "revision") strings and outputs their difference: items deleted from the original appear in red, those added in the revision appear in green, and those common to both inputs appear in black. Items here can be taken to be either words (run get_word_diff.rb) or characters (run get_char_diff.rb).
 
