@@ -27,8 +27,8 @@ function Versions(v1, v2){
   // the prefix of v1 up to index x, to the prefix of v2 up to index y.
   //
   this.diff = function(x,y) {
-    x = typeof x !== 'undefined' ? x : v1.length - 1;
-    y = typeof y !== 'undefined' ? y : v2.length - 1;
+    x = x !== undefined ? x : v1.length - 1;
+    y = y !== undefined ? y : v2.length - 1;
     if (x < 0 && y < 0) {
       return [];
     } else if (y < 0) {
