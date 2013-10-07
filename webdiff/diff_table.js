@@ -2,16 +2,16 @@ function Versions(v1, v2){
   this.v1 = v1;
   this.v2 = v2;
 
-  // lcs_table is an array of arrays. For x, y > 0, lcs_table[x][y] is the length of 
+  // lcs_table is an array of arrays. For x, y > 0, lcs_table[x][y] is the length of
   // the longest common subsequence of
   // the prefix of v1 up to index x-1 and the prefix of v2 up to the index y-1.
-  // 
+  //
   var lcs_table = [];
   while (lcs_table.length <= v2.length) {
-  lcs_table.push([0]);
+    lcs_table.push([0]);
   }
   while (lcs_table[0].length <= v1.length){
-  lcs_table[0].push(0);
+    lcs_table[0].push(0);
   }
   for (x=1; x<=v2.length; x++){
     for (y=1; y<=v1.length; y++){
@@ -57,12 +57,14 @@ function Versions(v1, v2){
 };
 
 var Display = function(){
-  return {deleted: function(text){
-    return '<span class="del"><strike>' + text + '</strike></span>';
-  },
-  added: function(text){
-    return '<span class="add">' + text + '</span>';
-  }};
+  return {
+    deleted: function(text){
+      return '<span class="del"><strike>' + text + '</strike></span>';
+    },
+    added: function(text){
+      return '<span class="add">' + text + '</span>';
+    }
+  };
 }();
 
 function WebDiff(original, revised){
