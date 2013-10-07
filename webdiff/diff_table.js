@@ -66,16 +66,11 @@
     }
   };
 
-  exports.WebDiff = function(original, revised){
-    this.original = original; // original, revised are strings
-    this.revised = revised;
-
-    this.compare = function(){
-      var a = original.split(' ');
-      var b = revised.split(' ');
-      var v = new Versions(a,b);
-      var output = v.diff();
-      return output.join(' ');
-    }
+  exports.compare = function(original, revised){
+    var a = original.split(' ');
+    var b = revised.split(' ');
+    var v = new Versions(a,b);
+    var output = v.diff();
+    return output.join(' ');
   }
 }(this));
