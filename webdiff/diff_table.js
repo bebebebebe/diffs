@@ -23,40 +23,39 @@
     return lcs_table;
   };
 
-  function Versions(v1, v2){
+  function diff(v1, v2){
     var lcs_table = lcsTable(v1, v2);
 
     // Uses lcs_table above to construct the implied edits in going from
     // the prefix of v1 up to index x, to the prefix of v2 up to index y.
     //
-    this.diff = function(x,y) {
+    return function generateEdits(x,y) {
       x = x !== undefined ? x : v1.length - 1;
       y = y !== undefined ? y : v2.length - 1;
       if (x < 0 && y < 0) {
         return [];
       } else if (y < 0) {
-        var array = this.diff(x-1, y);
+        var array = generateEdits(x-1, y);
         array.push(display.deleted(v1[x]));
         return array;
       } else if (x < 0) {
-        var array = this.diff(x, y-1);
+        var array = generateEdits(x, y-1);
         array.push(display.added(v2[y]));
         return array;
       } else if (v1[x] === v2[y]) {
-        var array = this.diff(x-1, y-1);
+        var array = generateEdits(x-1, y-1);
         array.push(v1[x]);
         return array;
       } else if (lcs_table[x][y+1] >= lcs_table[x+1][y]) {
-        var array = this.diff(x-1, y);
+        var array = generateEdits(x-1, y);
         array.push(display.deleted(v1[x]));
         return array;
       } else {
-        array = this.diff(x, y-1);
+        array = generateEdits(x, y-1);
         array.push(display.added(v2[y]));
         return array;
       }
-    }
-
+    }();
   };
 
   var display = {
@@ -71,8 +70,7 @@
   exports.compare = function(original, revised){
     var a = original.split(' ');
     var b = revised.split(' ');
-    var v = new Versions(a,b);
-    var output = v.diff();
+    var output = diff(a, b);
     return output.join(' ');
   }
 }(this));
