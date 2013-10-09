@@ -24,8 +24,6 @@
   };
 
   function Versions(v1, v2){
-    this.v1 = v1;
-    this.v2 = v2;
     var lcs_table = lcsTable(v1, v2);
 
     // Uses lcs_table above to construct the implied edits in going from
