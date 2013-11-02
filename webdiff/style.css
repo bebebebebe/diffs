@@ -2,32 +2,26 @@ body {
   font-family: Helvetica;
   color: gray;
   padding-top: 15%;
-  padding-left: 14%;
-  padding-right: 14%;
+  padding-left: 12%;
+  padding-right: 12%;
 }
 
-.project-btn {
-  background-color: white;
-    color: LightGray;
-    font-size: 20px;
-    text-decoration: none;
-    cursor: poiner;
-     border:none;
-  &:hover {
-  border: none;
-  color: $text;
-}
-/*  &:focus {
-    outline: none;
-  color: gray;
-  }*/
+.description {
+  color: #999999;
+  font-style: italic;
+  text-indent: 10px;
 }
 
-
+.article-title {
+  font-family: Helvetica, Times, 'Times New Roman', serif;
+  font-size: 28px;
+  color: black;
+  text-decoration: none;
+}
 
 .code-link {
   text-decoration: none;
-  color: lighten($text, 20%);
+  color: LightGray;
   font-size: small;
   text-align: right;
   display: inline-block;
@@ -36,14 +30,11 @@ body {
   right: 100px;
   bottom: 120px;
   display: inline-block;
-  &:hover {
-    color: $text;
-  }
 }
 
-
-
-
+.code-link:hover {
+    color: gray;
+}
 
 
 .add {
@@ -85,7 +76,7 @@ textarea {
 
 #btn {
     background-color: white;
-    color: LightGray;
+    color: LightSteelBlue;
     font-size: 20px;
     text-decoration: none;
     cursor: poiner;
@@ -105,8 +96,9 @@ textarea {
 #original, #revised {
   border: 1px solid LightGray;
   resize: none;
-  &:focus {
+}
+
+#original:focus, #revised:focus {
     border: 1px solid gray;
     outline: none;
   }
-}
