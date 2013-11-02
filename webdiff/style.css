@@ -6,6 +6,18 @@ body {
   padding-right: 12%;
 }
 
+.back-link {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: LightSteelBlue;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: SteelBlue;
+}
+
 .description {
   color: #999999;
   font-style: italic;
@@ -38,11 +50,11 @@ body {
 
 
 .add {
-  color: black;
+  color: SteelBlue;
 }
 
 .del {
-  color: LightGray;
+  color: MistyRose;
 }
 
 #texts {
@@ -85,12 +97,12 @@ textarea {
 
 #btn:hover {
   border: none;
-  color: gray;
+  color: SteelBlue;
 }
 
 #btn:focus {
   outline: none;
-  color: gray;
+  color: LightSteelBlue;
 }
 
 #original, #revised {
