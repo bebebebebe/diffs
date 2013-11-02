@@ -1,7 +1,68 @@
+body {
+  font-family: georgia;
+}
+
 .add {
-  color: green;
+  color: black;
 }
 
 .del {
-  color: red;
+  color: LightGray;
+}
+
+#texts {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 300px;
+}
+
+textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 45%;
+  height: 45%;
+}
+
+#result {
+  float: right;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 45%;
+  height: 45%;
+}
+
+.result-info {
+  color: black;
+}
+
+
+#btn {
+    background-color: white;
+    color: LightGray;
+    font-size: 20px;
+    text-decoration: none;
+    cursor: poiner;
+     border:none;
+}
+
+#btn:hover {
+  border: none;
+  color: gray;
+}
+
+#btn:focus {
+  outline: none;
+  color: gray;
+}
+
+#original, #revised {
+  border: 1px solid LightGray;
+  resize: none;
+  &:focus {
+    border: 1px solid gray;
+    outline: none;
+  }
 }
