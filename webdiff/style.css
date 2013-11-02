@@ -1,6 +1,50 @@
 body {
-  font-family: georgia;
+  font-family: Helvetica;
+  color: gray;
+  padding-top: 15%;
+  padding-left: 14%;
+  padding-right: 14%;
 }
+
+.project-btn {
+  background-color: white;
+    color: LightGray;
+    font-size: 20px;
+    text-decoration: none;
+    cursor: poiner;
+     border:none;
+  &:hover {
+  border: none;
+  color: $text;
+}
+/*  &:focus {
+    outline: none;
+  color: gray;
+  }*/
+}
+
+
+
+.code-link {
+  text-decoration: none;
+  color: lighten($text, 20%);
+  font-size: small;
+  text-align: right;
+  display: inline-block;
+  font-family: monospace;
+  position: absolute;
+  right: 100px;
+  bottom: 120px;
+  display: inline-block;
+  &:hover {
+    color: $text;
+  }
+}
+
+
+
+
+
 
 .add {
   color: black;
