@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
   var button = $('#btn');
   var output = document.getElementById("result");
