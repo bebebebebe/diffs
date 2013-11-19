@@ -58,14 +58,14 @@
 
   };
 
-  var Display = function(){
-    return {deleted: function(text){
+  var display = {
+    {deleted: function(text){
       return '<span class="del"><strike>' + text + '</strike></span>';
     },
     added: function(text){
       return '<span class="add">' + text + '</span>';
-    }};
-  }();
+    }
+  };
 
   exports.WebDiff = function(original, revised) {
     this.original = original; // original, revised are strings
