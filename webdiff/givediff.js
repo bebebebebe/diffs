@@ -5,7 +5,7 @@ $(document).ready(function(){
     var original = $('#original').val();
     var revised = $('#revised').val();
     w = new WebDiff(original, revised);
-    output.innerHTML="Implied edits in going from your first to your revised text:<br>" + w.compare();
+    output.innerHTML="Implied edits in going from your first to your revised text:<br/><br/>" + w.compare();
   })
 
 })
