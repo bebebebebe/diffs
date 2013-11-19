@@ -1,9 +1,6 @@
 ;(function(exports) {
 
-  function Versions(v1, v2){
-    this.v1 = v1;
-    this.v2 = v2;
-
+  function lcsTable(v1, v2) {
     // lcs_table is an array of arrays. For x, y > 0, lcs_table[x][y] is the length of 
     // the longest common subsequence of
     // the prefix of v1 up to index x-1 and the prefix of v2 up to the index y-1.
@@ -24,6 +21,13 @@
         }
       }
     }
+    return lcs_table;
+  }
+
+  function Versions(v1, v2){
+    this.v1 = v1;
+    this.v2 = v2;
+    var lcs_table = lcsTable(v1, v2);
 
     // Uses lcs_table above to construct the implied edits in going from
     // the prefix of v1 up to index x, to the prefix of v2 up to index y.
