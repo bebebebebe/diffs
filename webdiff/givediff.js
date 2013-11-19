@@ -4,7 +4,7 @@ $(document).ready(function(){
   button.on('click', function(){
     var original = $('#original').val();
     var revised = $('#revised').val();
-    w = new WebDiff(original, revised);
+    w = new window.WebDiff(original, revised);
     output.innerHTML="Implied edits in going from your first to your revised text:<br/><br/>" + w.compare();
   })
 
