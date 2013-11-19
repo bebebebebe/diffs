@@ -1,3 +1,14 @@
+// Hello.
+//
+// This is JSHint, a tool that helps to detect errors and potential
+// problems in your JavaScript code.
+//
+// To start, simply enter some JavaScript anywhere on this page. Your
+// report will appear on the right side.
+//
+// Additionally, you can toggle specific options in the Configure
+// menu.
+
 ;(function(exports) {
 
   function lcsTable(v1, v2) {
@@ -12,12 +23,12 @@
     while (lcs_table[0].length <= v1.length){
     lcs_table[0].push(0);
     }
-    for (x=1; x<=v2.length; x++){
-      for (y=1; y<=v1.length; y++){
+    for (var x=1; x<=v2.length; x++){
+      for (var y=1; y<=v1.length; y++){
         if (v1[x-1] === v2[y-1]) {
-          lcs_table[x][y] = lcs_table[x-1][y-1] + 1
+          lcs_table[x][y] = lcs_table[x-1][y-1] + 1;
         } else {
-          lcs_table[x][y] = Math.max(lcs_table[x-1][y], lcs_table[x][y-1])
+          lcs_table[x][y] = Math.max(lcs_table[x-1][y], lcs_table[x][y-1]);
         }
       }
     }
@@ -26,7 +37,6 @@
 
   function diff(v1, v2) {
     var lcs_table = lcsTable(v1, v2);
-
     // Uses lcs_table above to construct the implied edits in going from
     // the prefix of v1 up to index x, to the prefix of v2 up to index y.
     //
@@ -57,7 +67,7 @@
         return array;
       }
     }();
-  };
+  }
 
   var display = {
     deleted: function(text){
@@ -73,5 +83,5 @@
       var b = revised.split(' ');
       var output = diff(a, b);
       return output.join(' ');
-  }
+  };
 }(this));
