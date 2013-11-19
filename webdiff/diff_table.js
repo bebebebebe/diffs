@@ -35,11 +35,11 @@
         return [];
       } else if (y < 0) {
         var array = this.diff(x-1, y);
-        array.push(Display.deleted(v1[x]));
+        array.push(display.deleted(v1[x]));
         return array;
       } else if (x < 0) {
         var array = this.diff(x, y-1);
-        array.push(Display.added(v2[y]));
+        array.push(display.added(v2[y]));
         return array;
       } else if (v1[x] === v2[y]) {
         var array = this.diff(x-1, y-1);
@@ -47,11 +47,11 @@
         return array;
       } else if (lcs_table[x][y+1] >= lcs_table[x+1][y]) {
         var array = this.diff(x-1, y);
-        array.push(Display.deleted(v1[x]));
+        array.push(display.deleted(v1[x]));
         return array;
       } else {
         array = this.diff(x, y-1);
-        array.push(Display.added(v2[y]));
+        array.push(display.added(v2[y]));
         return array;
       }
     }
@@ -59,7 +59,7 @@
   };
 
   var display = {
-    {deleted: function(text){
+    deleted: function(text){
       return '<span class="del"><strike>' + text + '</strike></span>';
     },
     added: function(text){
@@ -67,16 +67,11 @@
     }
   };
 
-  exports.WebDiff = function(original, revised) {
-    this.original = original; // original, revised are strings
-    this.revised = revised;
-
-    this.compare = function(){
+  exports.compare = function(original, revised) {
       var a = original.split(' ');
       var b = revised.split(' ');
       var v = new Versions(a,b);
       var output = v.diff();
       return output.join(' ');
-    }
   }
 }(this));
