@@ -25,7 +25,7 @@
   }
 
   function diff(v1, v2) {
-    var lcs_table = lcsTable(v1, v2);
+    var table = lcsTable(v1, v2);
     // Uses lcs_table above to construct the implied edits in going from
     // the prefix of v1 up to index x, to the prefix of v2 up to index y.
     //
@@ -46,7 +46,7 @@
         var array = generateEdits(x-1, y-1);
         array.push(v1[x]);
         return array;
-      } else if (lcs_table[x][y+1] >= lcs_table[x+1][y]) {
+      } else if (table[x][y+1] >= table[x+1][y]) {
         var array = generateEdits(x-1, y);
         array.push(display.deleted(v1[x]));
         return array;
