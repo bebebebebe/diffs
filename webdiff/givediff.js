@@ -5,6 +5,6 @@ $(document).ready(function(){
     var original = $('#original').val();
     var revised = $('#revised').val();
     var diff = window.compare(original, revised);
-    output.innerHTML = "<br/>Implied edits in going from your first to your revised text:<br/><br/>" + compare(original, revised);
+    output.innerHTML = "<br/>Implied edits in going from your first to your revised text:<br/><br/>" + diff;
   })
-})
+});
