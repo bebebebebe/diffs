@@ -73,4 +73,5 @@
       var output = diff(a, b);
       return output.join(' ');
   };
+
 }(this));
