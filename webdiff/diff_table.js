@@ -6,14 +6,14 @@
     // the prefix of v1 up to index x-1 and the prefix of v2 up to the index y-1.
     // 
     var lcs_table = [];
-    while (lcs_table.length <= v2.length) {
+    while (lcs_table.length <= v1.length) {
       lcs_table.push([0]);
     }
-    while (lcs_table[0].length <= v1.length) {
+    while (lcs_table[0].length <= v2.length) {
       lcs_table[0].push(0);
     }
-    for (var x=1; x<=v2.length; x++) {
-      for (var y=1; y<=v1.length; y++) {
+    for (var x=1; x<=v1.length; x++) {
+      for (var y=1; y<=v2.length; y++) {
         if (v1[x-1] === v2[y-1]) {
           lcs_table[x][y] = lcs_table[x-1][y-1] + 1;
         } else {
